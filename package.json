@@ -1,0 +1,21 @@
+{
+  "name": "nerdometer",
+  "version": "1.0.0",
+  "description": "Un quiz interactivo que mide qué tan nerd eres",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "deploy:netlify": "netlify deploy --prod",
+    "deploy:vercel": "vercel --prod",
+    "deploy:surge": "surge . nerdometer.surge.sh"
+  },
+  "keywords": [
+    "quiz",
+    "nerd",
+    "geek",
+    "interactive",
+    "spanish"
+  ],
+  "author": "",
+  "license": "MIT"
+}

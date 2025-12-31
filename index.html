@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nerdómetro - ¿Qué tan nerd eres?</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤓 NERDÓMETRO 🤓</h1>
+            <p class="subtitle">Descubre qué tan nerd eres realmente</p>
+        </header>
+
+        <div id="start-screen" class="screen active">
+            <div class="intro">
+                <p>Responde honestamente a las siguientes preguntas sobre tus intereses y hábitos.</p>
+                <p>Cada categoría explorará diferentes aspectos de la cultura nerd.</p>
+                <p><strong>Total: 100 preguntas</strong></p>
+            </div>
+            <button id="start-btn" class="btn-primary">Comenzar Quiz</button>
+        </div>
+
+        <div id="quiz-screen" class="screen">
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+            <div class="progress-text">
+                <span id="current-question">1</span> / <span id="total-questions">100</span>
+            </div>
+
+            <div id="category-name" class="category-name"></div>
+
+            <div id="question-container" class="question-container">
+                <p id="question-text" class="question-text"></p>
+                <div class="options">
+                    <button class="option-btn" data-answer="yes">Sí</button>
+                    <button class="option-btn" data-answer="no">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-screen" class="screen">
+            <div class="results-container">
+                <h2>¡Resultados!</h2>
+                <div id="score-display" class="score-display"></div>
+                <div id="title-display" class="title-display"></div>
+                <div id="title-description" class="title-description"></div>
+
+                <div id="category-breakdown" class="category-breakdown">
+                    <h3>Desglose por Categoría</h3>
+                    <div id="category-scores"></div>
+                </div>
+
+                <button id="restart-btn" class="btn-primary">Hacer el Quiz de Nuevo</button>
+                <button id="share-btn" class="btn-secondary">Compartir Resultado</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
