@@ -9,6 +9,21 @@
 <body>
     <div class="container">
         <header>
+            <div class="language-selector">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn active" data-lang="es">ES</button>
+                <button class="lang-btn" data-lang="pt">PT</button>
+            </div>
+
+            <!-- User Profile Section -->
+            <div id="user-profile" class="user-profile" style="display: none;">
+                <span id="username-display" class="username"></span>
+                <button id="logout-btn" class="btn-small">Logout</button>
+            </div>
+            <div id="guest-profile" class="guest-profile">
+                <a href="auth.html" class="btn-small">Login / Register</a>
+            </div>
+
             <h1>NERDÓMETRO</h1>
             <p class="subtitle">Descubre qué tan nerd eres realmente</p>
         </header>
@@ -80,6 +95,7 @@
     </div>
 
     <script src="config.js"></script>
+    <script src="translations.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

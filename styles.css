@@ -94,6 +94,111 @@ body::after {
 header {
     text-align: center;
     margin-bottom: 2rem;
+    position: relative;
+}
+
+.language-selector {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.lang-btn {
+    padding: 0.5rem 0.8rem;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.5rem;
+    background: var(--dark-bg);
+    color: var(--neon-cyan);
+    border: 2px solid var(--neon-cyan);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.lang-btn:hover {
+    background: var(--neon-cyan);
+    color: var(--dark-bg);
+    box-shadow: 0 0 15px var(--neon-cyan);
+    transform: scale(1.05);
+}
+
+.lang-btn.active {
+    background: var(--neon-pink);
+    color: var(--dark-bg);
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 15px var(--neon-pink);
+}
+
+@media (max-width: 768px) {
+    .language-selector {
+        position: static;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .lang-btn {
+        font-size: 0.45rem;
+        padding: 0.4rem 0.7rem;
+    }
+}
+
+.user-profile,
+.guest-profile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    z-index: 10;
+}
+
+.username {
+    color: var(--neon-green);
+    font-size: 0.5rem;
+    text-shadow: 0 0 5px var(--neon-green);
+}
+
+.btn-small {
+    padding: 0.5rem 0.8rem;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.4rem;
+    background: var(--dark-bg);
+    color: var(--neon-pink);
+    border: 2px solid var(--neon-pink);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 5px var(--neon-pink);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-small:hover {
+    background: var(--neon-pink);
+    color: var(--dark-bg);
+    box-shadow: 0 0 15px var(--neon-pink);
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .user-profile,
+    .guest-profile {
+        position: static;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .username {
+        font-size: 0.45rem;
+    }
+
+    .btn-small {
+        font-size: 0.38rem;
+        padding: 0.4rem 0.7rem;
+    }
 }
 
 header h1 {
