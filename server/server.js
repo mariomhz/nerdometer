@@ -36,6 +36,11 @@ const quizResultSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    quizMode: {
+        type: String,
+        enum: ['quick', 'detailed'],
+        default: 'detailed'
+    },
     categoryScores: {
         type: Map,
         of: {
@@ -70,6 +75,7 @@ app.post('/api/quiz-results', async (req, res) => {
             maxScore,
             percentage,
             title,
+            quizMode,
             categoryScores,
             answers
         } = req.body;
@@ -79,6 +85,7 @@ app.post('/api/quiz-results', async (req, res) => {
             maxScore,
             percentage,
             title,
+            quizMode: quizMode || 'detailed',
             categoryScores,
             answers,
             userAgent: req.headers['user-agent'],

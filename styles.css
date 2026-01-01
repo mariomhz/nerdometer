@@ -195,6 +195,110 @@ header h1 {
     font-size: 0.7rem;
 }
 
+.version-title {
+    font-size: 1.5rem;
+    color: var(--neon-pink);
+    text-shadow: 0 0 20px var(--neon-pink);
+    margin-bottom: 1rem;
+}
+
+.version-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.version-btn {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    font-family: 'Press Start 2P', cursive;
+    border: 4px solid;
+    background: var(--dark-bg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    gap: 1rem;
+    text-align: center;
+}
+
+.btn-quick {
+    border-color: var(--neon-yellow);
+    box-shadow: 0 0 15px var(--neon-yellow);
+}
+
+.btn-quick:hover {
+    background: var(--neon-yellow);
+    box-shadow: 0 0 30px var(--neon-yellow);
+    transform: scale(1.05);
+}
+
+.btn-quick:hover .version-name,
+.btn-quick:hover .version-desc,
+.btn-quick:hover .version-time {
+    color: var(--dark-bg);
+}
+
+.btn-detailed {
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.btn-detailed:hover {
+    background: var(--neon-pink);
+    box-shadow: 0 0 30px var(--neon-pink);
+    transform: scale(1.05);
+}
+
+.btn-detailed:hover .version-name,
+.btn-detailed:hover .version-desc,
+.btn-detailed:hover .version-time {
+    color: var(--dark-bg);
+}
+
+.version-name {
+    font-size: 1rem;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 10px currentColor;
+}
+
+.btn-detailed .version-name {
+    color: var(--neon-pink);
+}
+
+.version-desc {
+    font-size: 0.7rem;
+    color: var(--neon-cyan);
+}
+
+.version-time {
+    font-size: 0.5rem;
+    color: var(--neon-green);
+}
+
+@media (max-width: 768px) {
+    .version-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .version-btn {
+        padding: 1.5rem 1rem;
+    }
+
+    .version-name {
+        font-size: 0.8rem;
+    }
+
+    .version-desc {
+        font-size: 0.6rem;
+    }
+
+    .version-time {
+        font-size: 0.45rem;
+    }
+}
+
 .btn-primary, .btn-secondary {
     width: 100%;
     padding: 1.2rem 2rem;

@@ -13,13 +13,33 @@
             <p class="subtitle">Descubre qué tan nerd eres realmente</p>
         </header>
 
-        <div id="start-screen" class="screen active">
+        <div id="version-screen" class="screen active">
+            <div class="intro">
+                <h2 class="version-title">Elige tu Modo</h2>
+                <p>¿Cuánto tiempo tienes?</p>
+            </div>
+            <div class="version-options">
+                <button id="quick-btn" class="version-btn btn-quick">
+                    <span class="version-name">⚡ MODO RÁPIDO</span>
+                    <span class="version-desc">10 preguntas</span>
+                    <span class="version-time">~2 minutos</span>
+                </button>
+                <button id="detailed-btn" class="version-btn btn-detailed">
+                    <span class="version-name">🎯 MODO COMPLETO</span>
+                    <span class="version-desc">100 preguntas</span>
+                    <span class="version-time">~10 minutos</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="start-screen" class="screen">
             <div class="intro">
                 <p>Responde honestamente a las siguientes preguntas sobre tus intereses y hábitos.</p>
                 <p>Cada categoría explorará diferentes aspectos de la cultura nerd.</p>
-                <p><strong>Total: 100 preguntas</strong></p>
+                <p><strong id="total-info">Total: 100 preguntas</strong></p>
             </div>
             <button id="start-btn" class="btn-primary">Comenzar Quiz</button>
+            <button id="back-btn" class="btn-secondary">Cambiar Modo</button>
         </div>
 
         <div id="quiz-screen" class="screen">

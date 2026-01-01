@@ -152,16 +152,36 @@ const quizData = [
     }
 ];
 
-// Flatten questions for easier navigation
+// Quiz mode selection
+let quizMode = 'detailed'; // 'quick' or 'detailed'
 let allQuestions = [];
-quizData.forEach(category => {
-    category.questions.forEach(question => {
-        allQuestions.push({
-            category: category.category,
-            question: question
+
+// Function to generate questions based on mode
+function generateQuestions(mode) {
+    const questions = [];
+
+    if (mode === 'quick') {
+        // 1 question per category (10 total)
+        quizData.forEach(category => {
+            questions.push({
+                category: category.category,
+                question: category.questions[0] // First question from each category
+            });
         });
-    });
-});
+    } else {
+        // All questions (100 total)
+        quizData.forEach(category => {
+            category.questions.forEach(question => {
+                questions.push({
+                    category: category.category,
+                    question: question
+                });
+            });
+        });
+    }
+
+    return questions;
+}
 
 // State
 let currentQuestionIndex = 0;
@@ -169,15 +189,23 @@ let answers = [];
 let categoryScores = {};
 
 // Initialize category scores
-quizData.forEach(category => {
-    categoryScores[category.category] = { score: 0, total: category.questions.length };
-});
+function initializeCategoryScores() {
+    categoryScores = {};
+    quizData.forEach(category => {
+        const total = quizMode === 'quick' ? 1 : category.questions.length;
+        categoryScores[category.category] = { score: 0, total: total };
+    });
+}
 
 // DOM Elements
+const versionScreen = document.getElementById('version-screen');
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
 const resultsScreen = document.getElementById('results-screen');
+const quickBtn = document.getElementById('quick-btn');
+const detailedBtn = document.getElementById('detailed-btn');
 const startBtn = document.getElementById('start-btn');
+const backBtn = document.getElementById('back-btn');
 const restartBtn = document.getElementById('restart-btn');
 const shareBtn = document.getElementById('share-btn');
 const progressFill = document.getElementById('progress-fill');
@@ -186,14 +214,38 @@ const totalQuestionsEl = document.getElementById('total-questions');
 const categoryNameEl = document.getElementById('category-name');
 const questionTextEl = document.getElementById('question-text');
 const optionBtns = document.querySelectorAll('.option-btn');
+const totalInfoEl = document.getElementById('total-info');
 
 // Event Listeners
+quickBtn.addEventListener('click', () => selectMode('quick'));
+detailedBtn.addEventListener('click', () => selectMode('detailed'));
 startBtn.addEventListener('click', startQuiz);
+backBtn.addEventListener('click', goBackToVersionSelection);
 restartBtn.addEventListener('click', restartQuiz);
 shareBtn.addEventListener('click', shareResults);
 optionBtns.forEach(btn => {
     btn.addEventListener('click', handleAnswer);
 });
+
+// Mode selection
+function selectMode(mode) {
+    quizMode = mode;
+    allQuestions = generateQuestions(mode);
+    initializeCategoryScores();
+
+    // Update UI
+    const questionCount = mode === 'quick' ? '10 preguntas' : '100 preguntas';
+    totalInfoEl.textContent = `Total: ${questionCount}`;
+
+    // Show start screen
+    versionScreen.classList.remove('active');
+    startScreen.classList.add('active');
+}
+
+function goBackToVersionSelection() {
+    startScreen.classList.remove('active');
+    versionScreen.classList.add('active');
+}
 
 // Functions
 function startQuiz() {
@@ -357,6 +409,7 @@ async function saveResultsToBackend(totalScore, nerdTitle) {
         maxScore: allQuestions.length,
         percentage,
         title: nerdTitle.title,
+        quizMode: quizMode, // 'quick' or 'detailed'
         categoryScores,
         answers
     };
@@ -387,15 +440,11 @@ function restartQuiz() {
     // Reset state
     currentQuestionIndex = 0;
     answers = [];
+    initializeCategoryScores();
 
-    // Reset category scores
-    quizData.forEach(category => {
-        categoryScores[category.category] = { score: 0, total: category.questions.length };
-    });
-
-    // Show start screen
+    // Show version selection screen
     resultsScreen.classList.remove('active');
-    startScreen.classList.add('active');
+    versionScreen.classList.add('active');
 }
 
 function shareResults() {

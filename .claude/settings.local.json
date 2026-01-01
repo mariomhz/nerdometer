@@ -10,7 +10,16 @@
       "Bash(start MONGODB_INSTALL.md)",
       "Bash(npm install)",
       "Bash(mongosh:*)",
-      "Bash(npm start)"
+      "Bash(npm start)",
+      "Bash(start GITHUB_SETUP.md)",
+      "Bash(start https://github.com/new)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(start https://railway.app)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(start https://app.netlify.com/drop)",
+      "Bash(curl:*)"
     ]
   }
 }
