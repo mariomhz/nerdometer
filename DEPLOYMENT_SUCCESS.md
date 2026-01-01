@@ -1,13 +1,13 @@
-# 🎉 Deployment Successful!
+# Deployment Successful!
 
 Your Nerdómetro quiz is now LIVE!
 
 ---
 
-## 🌐 Your Live URLs
+## Your Live URLs
 
 ### **Frontend (Quiz)**
-https://6955b40d152b43fb554508db--gleeful-figolla-4389a1.netlify.app/
+https://nerdometer.vercel.app/
 
 Share this URL with anyone to take the quiz!
 
@@ -43,68 +43,62 @@ Verify backend and database are running.
 
 ---
 
-## ✅ Test Your Deployment
+## Test Your Deployment
 
-1. **Open your quiz:** https://6955b40d152b43fb554508db--gleeful-figolla-4389a1.netlify.app/
+1. **Open your quiz:** https://nerdometer.vercel.app/
 
-2. **Take the quiz** (all 100 questions)
+2. **Choose a quiz mode** (Quick or Detailed)
 
-3. **Open browser console (F12)** and look for:
+3. **Take the quiz**
+
+4. **Open browser console (F12)** and look for:
    ```
-   ✅ Results saved successfully: <some-id>
+   Results saved successfully: <some-id>
    ```
 
-4. **Check stats:** https://nerdometer-production.up.railway.app/api/stats
-   - You should see `totalAttempts: 1` after completing the quiz
+5. **Check stats:** https://nerdometer-production.up.railway.app/api/stats
+   - You should see your quiz attempt counted!
 
 ---
 
-## 🎨 What You Built
+## What You Built
 
-- ✅ **80s Arcade Style Design** with neon colors and retro fonts
-- ✅ **100 Questions** across 10 nerd categories
-- ✅ **10 Ranking Levels** from "ANTI-NERD" to "OMNINERD SUPREMO"
-- ✅ **Full Backend** with Node.js/Express and MongoDB
-- ✅ **Live Database** storing all quiz results
-- ✅ **Analytics API** to track all submissions
+- **80s Arcade Style Design** with neon colors and retro fonts (no emojis)
+- **Two Quiz Modes:** Quick (10 questions) and Detailed (100 questions)
+- **10 Ranking Levels** from "ANTI-NERD" to "OMNINERD SUPREMO"
+- **Full Backend** with Node.js/Express and MongoDB
+- **Live Database** storing all quiz results
+- **Analytics API** to track all submissions
+- **Mobile Optimized** for phone readability
 
 ---
 
-## 🔄 How to Update Your Site
+## How to Update Your Site
 
-### Update Frontend:
+Both Vercel and Railway auto-deploy from GitHub!
 
 1. Make changes to your files locally
-2. Commit changes:
-   ```bash
-   git add .
-   git commit -m "Your update message"
-   git push
-   ```
-3. Go to Netlify
-4. Drag and drop the folder again (or connect GitHub for auto-deploy)
-
-### Update Backend:
-
-1. Make changes to server files
 2. Commit and push:
    ```bash
    git add .
    git commit -m "Your update message"
    git push
    ```
-3. Railway will automatically redeploy!
+3. Vercel and Railway automatically deploy (takes ~1 minute)
+
+That's it! No manual redeployment needed.
 
 ---
 
-## 📱 Share Your Quiz
+## Share Your Quiz
 
 Share this URL with friends:
 ```
-https://6955b40d152b43fb554508db--gleeful-figolla-4389a1.netlify.app/
+https://nerdometer.vercel.app/
 ```
 
 They can:
+- Choose Quick or Detailed mode
 - Take the quiz
 - Get their nerd level
 - Share results on social media
@@ -112,15 +106,17 @@ They can:
 
 ---
 
-## 🛠️ Manage Your Deployments
+## Manage Your Deployments
 
-### Netlify Dashboard
-- https://app.netlify.com
+### Vercel Dashboard
+- https://vercel.com/dashboard
 - View deploys, analytics, custom domain setup
+- Auto-deploys from GitHub
 
 ### Railway Dashboard
 - https://railway.app
 - Monitor backend, database usage, logs
+- Auto-deploys from GitHub
 
 ### GitHub Repository
 - https://github.com/mariomhz/nerdometer
@@ -128,17 +124,16 @@ They can:
 
 ---
 
-## 🎯 Next Steps (Optional)
+## Next Steps (Optional)
 
 ### 1. Custom Domain
 - Buy a domain (like `nerdometer.com`)
-- Add it in Netlify: Site Settings → Domain Management
+- Add it in Vercel: Project Settings → Domains
 - Add it in Railway: Service Settings → Networking
 
-### 2. Better Netlify URL
-- In Netlify dashboard: Site Settings → Change Site Name
-- Pick something like `nerdometer` (if available)
-- New URL: `https://nerdometer.netlify.app`
+### 2. Better Vercel URL
+- Your URL is already perfect: `https://nerdometer.vercel.app`
+- If you want a custom domain, add it in Vercel dashboard
 
 ### 3. Analytics Dashboard
 - Build a dashboard to visualize quiz stats
@@ -152,7 +147,7 @@ They can:
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 **Quiz loads but results don't save:**
 - Check Railway logs: https://railway.app (Project → Service → Deployments)
@@ -164,18 +159,25 @@ They can:
 - Verify environment variables are set
 - Look at deployment logs
 
+**Frontend changes not showing:**
+- Wait 1-2 minutes for Vercel to deploy
+- Check Vercel dashboard for deployment status
+- Hard refresh browser (Ctrl+Shift+R)
+
 **Need to see what's happening:**
 - Backend logs: Railway dashboard → Your service → Deployments → View Logs
-- Frontend: Browser console (F12)
+- Frontend logs: Vercel dashboard → Project → Deployments
+- Browser: Console (F12)
 
 ---
 
-## 🎊 Congratulations!
+## Congratulations!
 
 You've successfully deployed a full-stack application with:
-- Modern frontend (Netlify)
+- Modern frontend (Vercel)
 - Backend API (Railway)
 - Database (MongoDB on Railway)
 - Version control (GitHub)
+- Auto-deploy on both platforms
 
 Your quiz is now live and ready to share with the world!

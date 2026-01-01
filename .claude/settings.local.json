@@ -19,7 +19,12 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(start https://app.netlify.com/drop)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(vercel --version:*)",
+      "Bash(npm install:*)",
+      "Bash(start VERCEL_DEPLOY.md)",
+      "Bash(start https://vercel.com/new)",
+      "Bash(start https://nerdometer.vercel.app/)"
     ]
   }
 }
