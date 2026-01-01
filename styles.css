@@ -596,16 +596,20 @@ header h1 {
 }
 
 @media (max-width: 768px) {
+    /* Disable heavy animations on mobile */
     header h1 {
         font-size: 2rem;
         line-height: 1.6;
         word-spacing: 0.1em;
         letter-spacing: 0.05em;
+        animation: none;
+        text-shadow: 0 0 5px var(--neon-pink);
     }
 
     .subtitle {
         font-size: 0.55rem;
         line-height: 1.8;
+        text-shadow: none;
     }
 
     .screen {
@@ -622,6 +626,7 @@ header h1 {
 
     .question-text {
         font-size: 0.7rem;
+        text-shadow: none;
     }
 
     .options {
@@ -638,28 +643,66 @@ header h1 {
         padding: 1rem;
     }
 
+    /* Results screen - make it readable on mobile */
+    .results-container h2 {
+        animation: none;
+        text-shadow: none;
+        color: #ffff00;
+        font-size: 1.3rem;
+    }
+
     .score-display {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        color: #00ffff;
+        text-shadow: none;
     }
 
     .title-display {
-        font-size: 1rem;
+        font-size: 1.2rem;
+        color: #ff00ff;
+        text-shadow: none;
+        animation: none;
+        line-height: 1.7;
     }
 
     .title-description {
-        font-size: 0.5rem;
+        font-size: 0.65rem;
+        color: #00ffff;
+        line-height: 2;
     }
 
     .category-name {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
+        animation: none;
+        text-shadow: none;
+    }
+
+    .category-breakdown {
+        border: 2px solid var(--neon-yellow);
+        box-shadow: none;
+    }
+
+    .category-breakdown h3 {
+        text-shadow: none;
+        font-size: 0.9rem;
+    }
+
+    .category-score {
+        border: 2px solid var(--neon-green);
+        box-shadow: none;
+        padding: 1rem;
+        margin-bottom: 1rem;
     }
 
     .category-score-name {
-        font-size: 0.4rem;
+        font-size: 0.5rem;
+        color: #00ffff;
     }
 
     .category-score-value {
-        font-size: 0.5rem;
+        font-size: 0.65rem;
+        color: #00ff00;
+        text-shadow: none;
     }
 }
 
@@ -667,6 +710,8 @@ header h1 {
     header h1 {
         font-size: 1.8rem;
         line-height: 1.7;
+        animation: none;
+        text-shadow: none;
     }
 
     .subtitle {
@@ -679,5 +724,28 @@ header h1 {
 
     .question-text {
         font-size: 0.65rem;
+    }
+
+    /* Even more readable results on small phones */
+    .score-display {
+        font-size: 2.2rem;
+    }
+
+    .title-display {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .title-description {
+        font-size: 0.6rem;
+        line-height: 2.2;
+    }
+
+    .category-score-name {
+        font-size: 0.48rem;
+    }
+
+    .category-score-value {
+        font-size: 0.6rem;
     }
 }
