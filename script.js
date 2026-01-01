@@ -1,156 +1,93 @@
-// Quiz data structure
-const quizData = [
-    {
-        category: "Anime y Manga",
-        questions: [
-            "¿Ves anime con regularidad?",
-            "¿Lees manga?",
-            "¿Conoces el anime de temporada (no solo clásicos)?",
-            "¿Has llorado con un anime?",
-            "¿Ves anime en japonés original?",
-            "¿Sabes qué significan shōnen / seinen / shōjo?",
-            "¿Tienes volúmenes físicos de manga?",
-            "¿Tienes una lista de anime (MAL, AniList, etc.)?",
-            "¿Dices 'el manga es mejor' sin ironía?",
-            "¿Reconoces openings de anime solo por el sonido?"
-        ]
-    },
-    {
-        category: "Superhéroes y Cómics",
-        questions: [
-            "¿Lees cómics?",
-            "¿Conoces la diferencia entre las líneas temporales de Marvel y DC?",
-            "¿Discutes la fidelidad de los cómics en las películas?",
-            "¿Tienes un guionista o dibujante favorito?",
-            "¿Lees cómics independientes (Image, Dark Horse, etc.)?",
-            "¿Conoces superhéroes poco conocidos?",
-            "¿Tienes omnibuses o colecciones largas?",
-            "¿Ves vídeos de análisis o lore?",
-            "¿Dices 'en los cómics...' con frecuencia?",
-            "¿Tienes opiniones fuertes sobre reboots?"
-        ]
-    },
-    {
-        category: "Videojuegos",
-        questions: [
-            "¿Juegas videojuegos con regularidad?",
-            "¿Tienes consola o PC gaming?",
-            "¿Rejuegas juegos varias veces?",
-            "¿Te importa el lore?",
-            "¿Juegas RPGs o juegos de estrategia?",
-            "¿Conoces estudios de desarrollo por nombre?",
-            "¿Te emocionas con tráilers de videojuegos?",
-            "¿Has jugado juegos retro?",
-            "¿Ves contenido de videojuegos en YouTube o Twitch?",
-            "¿Tienes opiniones fuertes sobre la dificultad de los juegos?"
-        ]
-    },
-    {
-        category: "Fantasía y Ciencia Ficción",
-        questions: [
-            "¿Te gustan los mundos de fantasía?",
-            "¿Te gustan los mundos de ciencia ficción?",
-            "¿Conoces lore detallado de universos ficticios?",
-            "¿Lees novelas de fantasía o ciencia ficción?",
-            "¿Sabes que existen lenguajes inventados (o aprendes uno)?",
-            "¿Puedes nombrar múltiples universos ficticios?",
-            "¿Disfrutas del worldbuilding?",
-            "¿Discutes sobre qué es o no canon?",
-            "¿Te gustan las space operas?",
-            "¿Te gustan las historias de viajes en el tiempo?"
-        ]
-    },
-    {
-        category: "Juegos de Mesa y Rol",
-        questions: [
-            "¿Juegas juegos de mesa más allá del Monopoly?",
-            "¿Tienes varios juegos de mesa?",
-            "¿Juegas juegos de rol de mesa (D&D, etc.)?",
-            "¿Sabes qué es un DM o GM?",
-            "¿Disfrutas leer reglamentos?",
-            "¿Ves partidas de rol grabadas?",
-            "¿Tienes hojas de personaje guardadas?",
-            "¿Disfrutas juegos con mucha estrategia?",
-            "¿Te gustan los juegos de cartas (MTG, Pokémon, etc.)?",
-            "¿Has pasado horas seguidas en una noche de juego?"
-        ]
-    },
-    {
-        category: "Nerd Académico / del Conocimiento",
-        questions: [
-            "¿Disfrutas aprender por placer?",
-            "¿Te gusta la física?",
-            "¿Te gustan las matemáticas?",
-            "¿Te gusta la informática?",
-            "¿Te gusta la biología o la química?",
-            "¿Ves YouTube educativo?",
-            "¿Lees no ficción?",
-            "¿Disfrutas documentales?",
-            "¿Te gustan los acertijos o problemas lógicos?",
-            "¿Tienes datos aleatorios siempre listos?"
-        ]
-    },
-    {
-        category: "Nerd Tecnológico e Internet",
-        questions: [
-            "¿Sabes programar o hacer scripts?",
-            "¿Has programado algo 'por diversión'?",
-            "¿Conoces jerga tecnológica?",
-            "¿Montas o mejoras PCs?",
-            "¿Usas Linux o la terminal?",
-            "¿Conoces bien la historia de internet o los memes?",
-            "¿Te importan las especificaciones técnicas?",
-            "¿Te gusta la automatización?",
-            "¿Tienes opiniones fuertes sobre software?",
-            "¿Lees changelogs?"
-        ]
-    },
-    {
-        category: "Cine, Series y Medios",
-        questions: [
-            "¿Analizas películas o series en profundidad?",
-            "¿Te fijas en la cinematografía?",
-            "¿Te importan los directores o guionistas?",
-            "¿Ves videoensayos?",
-            "¿Haces maratones de series de forma intencional?",
-            "¿Conoces el orden de estreno y el orden cronológico?",
-            "¿Disfrutas historias lentas o complejas?",
-            "¿Revisas tus obras favoritas?",
-            "¿Conoces trivia?",
-            "¿Citas frases constantemente?"
-        ]
-    },
-    {
-        category: "Coleccionismo y Merch",
-        questions: [
-            "¿Coleccionas figuras o merchandising?",
-            "¿Tienes pósters o arte?",
-            "¿Compras ediciones especiales?",
-            "¿Mantienes las cosas en perfecto estado?",
-            "¿Conoces marcas de figuras?",
-            "¿Muestras tu colección con orgullo?",
-            "¿Tienes estanterías dedicadas a fandoms?",
-            "¿Coleccionas cartas?",
-            "¿Coleccionas libros o cómics?",
-            "¿Te emocionas con lanzamientos limitados?"
-        ]
-    },
-    {
-        category: "Comportamientos Meta-Nerd (Bonus)",
-        questions: [
-            "¿Corriges a la gente 'educadamente'?",
-            "¿Haces tier lists?",
-            "¿Llevas listas o bases de datos?",
-            "¿Te hiperfijas?",
-            "¿Haces infodumping cuando te dejan?",
-            "¿Recuerdas detalles muy específicos?",
-            "¿Disfrutas los debates?",
-            "¿Te encantan los easter eggs?",
-            "¿Te involucras emocionalmente?",
-            "¿Dices 'esto es realmente interesante...'?"
-        ]
+// Authentication state
+let currentUser = null;
+let authToken = null;
+
+// Check authentication on page load
+async function checkAuth() {
+    authToken = localStorage.getItem('token');
+    const userStr = localStorage.getItem('user');
+
+    if (authToken && userStr) {
+        try {
+            currentUser = JSON.parse(userStr);
+            updateUIForLoggedInUser();
+        } catch (error) {
+            console.error('Error parsing user data:', error);
+            logout();
+        }
+    } else {
+        updateUIForGuest();
     }
-];
+}
+
+function updateUIForLoggedInUser() {
+    const userProfile = document.getElementById('user-profile');
+    const guestProfile = document.getElementById('guest-profile');
+    const usernameDisplay = document.getElementById('username-display');
+
+    if (usernameDisplay && currentUser) {
+        usernameDisplay.textContent = currentUser.username;
+    }
+    if (userProfile) userProfile.style.display = 'flex';
+    if (guestProfile) guestProfile.style.display = 'none';
+}
+
+function updateUIForGuest() {
+    const userProfile = document.getElementById('user-profile');
+    const guestProfile = document.getElementById('guest-profile');
+
+    if (userProfile) userProfile.style.display = 'none';
+    if (guestProfile) guestProfile.style.display = 'block';
+}
+
+// Logout function
+async function logout() {
+    try {
+        const API_URL = (typeof API_CONFIG !== 'undefined' && API_CONFIG.apiUrl)
+            ? API_CONFIG.apiUrl
+            : 'http://localhost:3000/api';
+
+        if (authToken) {
+            await fetch(`${API_URL}/auth/logout`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                credentials: 'include'
+            });
+        }
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    currentUser = null;
+    authToken = null;
+    updateUIForGuest();
+}
+
+// Add logout event listener
+document.addEventListener('DOMContentLoaded', () => {
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
+});
+
+// Get current language quiz data based on selected language
+function getCurrentQuizData() {
+    const lang = languageUtils.currentLanguage;
+    const categories = translations[lang].categories;
+    const questions = translations[lang].questions;
+
+    return categories.map((category, index) => {
+        return {
+            category: category,
+            questions: questions[index]
+        };
+    });
+}
 
 // Quiz mode selection
 let quizMode = 'detailed'; // 'quick' or 'detailed'
@@ -159,6 +96,7 @@ let allQuestions = [];
 // Function to generate questions based on mode
 function generateQuestions(mode) {
     const questions = [];
+    const quizData = getCurrentQuizData();
 
     if (mode === 'quick') {
         // 1 question per category (10 total)
@@ -191,6 +129,7 @@ let categoryScores = {};
 // Initialize category scores
 function initializeCategoryScores() {
     categoryScores = {};
+    const quizData = getCurrentQuizData();
     quizData.forEach(category => {
         const total = quizMode === 'quick' ? 1 : category.questions.length;
         categoryScores[category.category] = { score: 0, total: total };
@@ -227,6 +166,15 @@ optionBtns.forEach(btn => {
     btn.addEventListener('click', handleAnswer);
 });
 
+// Language switching
+const langBtns = document.querySelectorAll('.lang-btn');
+langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const newLang = btn.dataset.lang;
+        languageUtils.setLanguage(newLang);
+    });
+});
+
 // Mode selection
 function selectMode(mode) {
     quizMode = mode;
@@ -234,8 +182,8 @@ function selectMode(mode) {
     initializeCategoryScores();
 
     // Update UI
-    const questionCount = mode === 'quick' ? '10 preguntas' : '100 preguntas';
-    totalInfoEl.textContent = `Total: ${questionCount}`;
+    const questionCount = mode === 'quick' ? languageUtils.t('quickModeDesc') : languageUtils.t('detailedModeDesc');
+    totalInfoEl.textContent = `${languageUtils.t('totalInfo').replace('100 preguntas', questionCount).replace('100 questions', questionCount).replace('100 perguntas', questionCount)}`;
 
     // Show start screen
     versionScreen.classList.remove('active');
@@ -307,57 +255,29 @@ function calculateTotalScore() {
 
 function getNerdTitle(score) {
     const percentage = (score / allQuestions.length) * 100;
+    const lang = languageUtils.currentLanguage;
+    const titles = translations[lang].titles;
 
     if (percentage >= 90) {
-        return {
-            title: "OMNINERD SUPREMO",
-            description: "Eres la encarnación definitiva del nerd. Tu nivel de conocimiento y pasión por la cultura geek es extraordinario. Probablemente tengas Wikipedia memorizada."
-        };
+        return titles[0]; // SUPREME OMNINERD
     } else if (percentage >= 80) {
-        return {
-            title: "NERD LEGENDARIO",
-            description: "Tu nivel nerd es impresionante. Dominas múltiples áreas de la cultura geek y tu pasión es innegable. La gente te consulta antes que a Google."
-        };
+        return titles[1]; // LEGENDARY NERD
     } else if (percentage >= 70) {
-        return {
-            title: "ULTRA NERD",
-            description: "Definitivamente eres un nerd de corazón. Tus conocimientos son vastos y tu entusiasmo es contagioso. Tus amigos saben que pueden contar contigo para cualquier dato freak."
-        };
+        return titles[2]; // ULTRA NERD
     } else if (percentage >= 60) {
-        return {
-            title: "NERD CERTIFICADO",
-            description: "Eres oficialmente nerd. Tienes áreas bien definidas donde brillas y tu pasión por ellas es clara. El equilibrio perfecto entre nerd y vida social."
-        };
+        return titles[3]; // CERTIFIED NERD
     } else if (percentage >= 50) {
-        return {
-            title: "NERD EN DESARROLLO",
-            description: "Estás en el camino del lado nerd. Tienes varios intereses geek pero aún hay mucho por explorar. Tu potencial es prometedor."
-        };
+        return titles[4]; // NERD IN DEVELOPMENT
     } else if (percentage >= 40) {
-        return {
-            title: "NERD CASUAL",
-            description: "Disfrutas de algunas cosas nerds pero de forma más relajada. No eres obsesivo, pero sí tienes tus gustos específicos en la cultura geek."
-        };
+        return titles[5]; // CASUAL NERD
     } else if (percentage >= 30) {
-        return {
-            title: "SEMI-NERD",
-            description: "Tienes algunos intereses nerds dispersos. Ocasionalmente te sumerges en temas geek, pero no es tu identidad principal."
-        };
+        return titles[6]; // SEMI-NERD
     } else if (percentage >= 20) {
-        return {
-            title: "NERD PRINCIPIANTE",
-            description: "Apenas estás explorando el mundo nerd. Tienes curiosidad por ciertas áreas pero aún no te has sumergido completamente."
-        };
+        return titles[7]; // BEGINNER NERD
     } else if (percentage >= 10) {
-        return {
-            title: "NO TAN NERD",
-            description: "La cultura nerd no es realmente lo tuyo. Puede que tengas uno o dos intereses relacionados, pero en general prefieres otros pasatiempos."
-        };
+        return titles[8]; // NOT SO NERDY
     } else {
-        return {
-            title: "ANTI-NERD",
-            description: "El mundo nerd es completamente ajeno a ti. Y está bien, cada quien tiene sus propios intereses. Pero... ¿estás seguro que respondiste honestamente?"
-        };
+        return titles[9]; // ANTI-NERD
     }
 }
 
@@ -415,11 +335,19 @@ async function saveResultsToBackend(totalScore, nerdTitle) {
     };
 
     try {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        // Include auth token if user is logged in
+        if (authToken) {
+            headers['Authorization'] = `Bearer ${authToken}`;
+        }
+
         const response = await fetch(API_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
+            credentials: 'include',
             body: JSON.stringify(data)
         });
 
@@ -452,20 +380,28 @@ function shareResults() {
     const nerdTitle = getNerdTitle(totalScore);
     const percentage = Math.round((totalScore / allQuestions.length) * 100);
 
-    const shareText = `¡Hice el Nerdómetro!\n\nMi resultado: ${nerdTitle.title}\nPuntuación: ${totalScore}/${allQuestions.length} (${percentage}%)\n\n¿Qué tan nerd eres tú?`;
+    const shareText = languageUtils.t('shareText')
+        .replace('{title}', nerdTitle.title)
+        .replace('{score}', totalScore)
+        .replace('{total}', allQuestions.length)
+        .replace('{percentage}', percentage);
 
     if (navigator.share) {
         navigator.share({
-            title: 'Mi resultado del Nerdómetro',
+            title: languageUtils.t('shareTitle'),
             text: shareText
         }).catch(err => console.log('Error sharing:', err));
     } else {
         // Fallback: copy to clipboard
         navigator.clipboard.writeText(shareText).then(() => {
-            alert('¡Resultado copiado al portapapeles!');
+            alert(languageUtils.t('shareCopied'));
         }).catch(err => {
             console.log('Error copying:', err);
-            alert('No se pudo compartir. Intenta copiar manualmente:\n\n' + shareText);
+            alert(languageUtils.t('shareError') + shareText);
         });
     }
 }
+
+// Initialize language and authentication on page load
+languageUtils.init();
+checkAuth();

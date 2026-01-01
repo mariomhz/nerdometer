@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nerdómetro - Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="language-selector">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn active" data-lang="es">ES</button>
+                <button class="lang-btn" data-lang="pt">PT</button>
+            </div>
+            <h1>NERDÓMETRO</h1>
+            <p class="subtitle">Authentication</p>
+        </header>
+
+        <!-- Login Screen -->
+        <div id="login-screen" class="auth-screen active">
+            <div class="auth-container">
+                <h2 class="auth-title">Login</h2>
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required autocomplete="current-password">
+                    </div>
+                    <div id="login-error" class="error-message"></div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                <div class="auth-links">
+                    <a href="#" id="show-register">Don't have an account? Register</a>
+                    <a href="#" id="show-forgot-password">Forgot Password?</a>
+                </div>
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                <a href="index.html" class="btn-secondary">Continue as Guest</a>
+            </div>
+        </div>
+
+        <!-- Register Screen -->
+        <div id="register-screen" class="auth-screen">
+            <div class="auth-container">
+                <h2 class="auth-title">Create Account</h2>
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="register-username">Username</label>
+                        <input type="text" id="register-username" required
+                               pattern="[a-zA-Z0-9_-]{3,30}"
+                               title="3-30 characters, letters, numbers, underscore, or hyphen"
+                               autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+                               title="At least 8 characters, one uppercase, one lowercase, one number"
+                               autocomplete="new-password">
+                        <div class="password-requirements">
+                            <small>At least 8 characters, one uppercase, one lowercase, one number</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required autocomplete="new-password">
+                    </div>
+                    <div id="register-error" class="error-message"></div>
+                    <button type="submit" class="btn-primary">Register</button>
+                </form>
+                <div class="auth-links">
+                    <a href="#" id="show-login">Already have an account? Login</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forgot Password Screen -->
+        <div id="forgot-password-screen" class="auth-screen">
+            <div class="auth-container">
+                <h2 class="auth-title">Reset Password</h2>
+                <p class="auth-description">Enter your email and we'll send you a reset link</p>
+                <form id="forgot-password-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="forgot-email">Email</label>
+                        <input type="email" id="forgot-email" required autocomplete="email">
+                    </div>
+                    <div id="forgot-error" class="error-message"></div>
+                    <div id="forgot-success" class="success-message"></div>
+                    <button type="submit" class="btn-primary">Send Reset Link</button>
+                </form>
+                <div class="auth-links">
+                    <a href="#" id="back-to-login">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="translations.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

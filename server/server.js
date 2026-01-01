@@ -1,15 +1,38 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+// Import middleware
+const { setupSecurity, generalLimiter } = require('./middleware/security');
+const { optionalAuth } = require('./middleware/auth');
+
+// Security middleware setup (helmet, sanitize, hpp)
+setupSecurity(app);
+
+// CORS configuration with credentials
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : ['http://localhost:3000'];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true  // Allow cookies
+}));
+
+// Body parser and cookie parser
 app.use(express.json());
-app.use(express.static('../')); // Serve static files from parent directory
+app.use(cookieParser());
+
+// Apply general rate limiting
+app.use(generalLimiter);
+
+// Serve static files from parent directory
+app.use(express.static('../'));
 
 // MongoDB connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/nerdometer';
@@ -18,8 +41,15 @@ mongoose.connect(MONGODB_URI)
 .then(() => console.log('✅ Connected to MongoDB'))
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// Quiz Result Schema
+// Quiz Result Schema (UPDATED with userId)
 const quizResultSchema = new mongoose.Schema({
+    // NEW: Link to user (optional for anonymous quiz taking)
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+        index: true
+    },
     totalScore: {
         type: Number,
         required: true
@@ -63,12 +93,23 @@ const quizResultSchema = new mongoose.Schema({
     timestamps: true
 });
 
+// Add compound index for user quiz history
+quizResultSchema.index({ userId: 1, completedAt: -1 });
+
 const QuizResult = mongoose.model('QuizResult', quizResultSchema);
+
+// Import routes
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+
+// Use authentication routes
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 // Routes
 
-// Save quiz result
-app.post('/api/quiz-results', async (req, res) => {
+// Save quiz result (UPDATED with optional auth)
+app.post('/api/quiz-results', optionalAuth, async (req, res) => {
     try {
         const {
             totalScore,
@@ -81,6 +122,7 @@ app.post('/api/quiz-results', async (req, res) => {
         } = req.body;
 
         const newResult = new QuizResult({
+            userId: req.user ? req.user._id : null,  // Link to user if logged in
             totalScore,
             maxScore,
             percentage,
@@ -93,6 +135,15 @@ app.post('/api/quiz-results', async (req, res) => {
         });
 
         await newResult.save();
+
+        // Update user stats if logged in
+        if (req.user) {
+            const User = mongoose.model('User');
+            await User.findByIdAndUpdate(req.user._id, {
+                $inc: { totalQuizzes: 1 },
+                $max: { highestScore: totalScore }
+            });
+        }
 
         res.status(201).json({
             success: true,
@@ -188,4 +239,5 @@ app.get('/api/health', (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
     console.log(`📊 API available at http://localhost:${PORT}/api`);
+    console.log(`🔐 Auth endpoints available at http://localhost:${PORT}/api/auth`);
 });

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email - Nerdómetro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NERDÓMETRO</h1>
+            <p class="subtitle">Email Verification</p>
+        </header>
+
+        <div class="auth-screen active">
+            <div class="auth-container">
+                <h2 class="auth-title" id="status-title">Verifying Email...</h2>
+                <div id="verification-message" style="text-align: center; color: var(--neon-cyan); font-size: 0.7rem; line-height: 1.8; margin: 20px 0;">
+                    <p>Please wait while we verify your email address...</p>
+                </div>
+                <div id="verification-error" class="error-message"></div>
+                <div id="verification-success" class="success-message"></div>
+                <div id="action-buttons" style="display: none; text-align: center; margin-top: 30px;">
+                    <a href="auth.html" class="btn-primary" style="display: inline-block; text-decoration: none; margin: 10px;">Go to Login</a>
+                    <a href="index.html" class="btn-secondary" style="display: inline-block; text-decoration: none; margin: 10px;">Go to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        const API_URL = (typeof API_CONFIG !== 'undefined' && API_CONFIG.apiUrl)
+            ? API_CONFIG.apiUrl
+            : 'http://localhost:3000/api';
+
+        // Get token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        const statusTitle = document.getElementById('status-title');
+        const messageEl = document.getElementById('verification-message');
+        const errorEl = document.getElementById('verification-error');
+        const successEl = document.getElementById('verification-success');
+        const actionButtons = document.getElementById('action-buttons');
+
+        if (!token) {
+            statusTitle.textContent = 'Invalid Link';
+            messageEl.style.display = 'none';
+            errorEl.textContent = 'No verification token provided. Please check your email link.';
+            errorEl.classList.add('show');
+            actionButtons.style.display = 'block';
+        } else {
+            // Verify email
+            verifyEmail(token);
+        }
+
+        async function verifyEmail(token) {
+            try {
+                const response = await fetch(`${API_URL}/auth/verify-email/${token}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    statusTitle.textContent = 'Email Verified!';
+                    statusTitle.style.color = 'var(--neon-green)';
+                    messageEl.style.display = 'none';
+                    successEl.textContent = data.message + ' You can now log in to your account.';
+                    successEl.classList.add('show');
+                    actionButtons.style.display = 'block';
+
+                    // Redirect to login after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'auth.html';
+                    }, 3000);
+                } else {
+                    statusTitle.textContent = 'Verification Failed';
+                    statusTitle.style.color = 'var(--neon-pink)';
+                    messageEl.style.display = 'none';
+                    errorEl.textContent = data.message;
+                    errorEl.classList.add('show');
+                    actionButtons.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                statusTitle.textContent = 'Verification Failed';
+                statusTitle.style.color = 'var(--neon-pink)';
+                messageEl.style.display = 'none';
+                errorEl.textContent = 'An error occurred while verifying your email. Please try again.';
+                errorEl.classList.add('show');
+                actionButtons.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
