@@ -452,7 +452,7 @@ function shareResults() {
     const nerdTitle = getNerdTitle(totalScore);
     const percentage = Math.round((totalScore / allQuestions.length) * 100);
 
-    const shareText = `¡Hice el Nerdómetro! 🤓\n\nMi resultado: ${nerdTitle.title}\nPuntuación: ${totalScore}/${allQuestions.length} (${percentage}%)\n\n¿Qué tan nerd eres tú?`;
+    const shareText = `¡Hice el Nerdómetro!\n\nMi resultado: ${nerdTitle.title}\nPuntuación: ${totalScore}/${allQuestions.length} (${percentage}%)\n\n¿Qué tan nerd eres tú?`;
 
     if (navigator.share) {
         navigator.share({
