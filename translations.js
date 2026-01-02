@@ -881,7 +881,19 @@ const languageUtils = {
         // Update language selector
         const langButtons = document.querySelectorAll('.lang-btn');
         langButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.lang === this.currentLanguage);
+            const isActive = btn.dataset.lang === this.currentLanguage;
+
+            // Remove all state classes
+            btn.classList.remove('bg-neon-pink', 'text-dark-bg', 'border-neon-pink', 'shadow-[0_0_15px]');
+            btn.classList.remove('bg-dark-bg', 'text-neon-cyan', 'border-neon-cyan', 'shadow-[0_0_5px]', 'hover:bg-neon-cyan', 'hover:text-dark-bg', 'hover:scale-105');
+
+            if (isActive) {
+                // Active state
+                btn.classList.add('bg-neon-pink', 'text-dark-bg', 'border-neon-pink', 'shadow-[0_0_15px]', 'shadow-neon-pink');
+            } else {
+                // Inactive state
+                btn.classList.add('bg-dark-bg', 'text-neon-cyan', 'border-neon-cyan', 'shadow-[0_0_5px]', 'shadow-neon-cyan', 'hover:bg-neon-cyan', 'hover:text-dark-bg', 'hover:scale-105');
+            }
         });
 
         // Update auth page elements if they exist
