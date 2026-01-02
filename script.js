@@ -125,6 +125,7 @@ function generateQuestions(mode) {
 let currentQuestionIndex = 0;
 let answers = [];
 let categoryScores = {};
+let quizActive = false; // Track if quiz is currently active
 
 // Initialize category scores
 function initializeCategoryScores() {
@@ -133,6 +134,27 @@ function initializeCategoryScores() {
     quizData.forEach(category => {
         const total = quizMode === 'quick' ? 1 : category.questions.length;
         categoryScores[category.category] = { score: 0, total: total };
+    });
+}
+
+// Language locking functions
+function lockLanguageSelector() {
+    quizActive = true;
+    const langButtons = document.querySelectorAll('.lang-btn');
+    langButtons.forEach(btn => {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+    });
+}
+
+function unlockLanguageSelector() {
+    quizActive = false;
+    const langButtons = document.querySelectorAll('.lang-btn');
+    langButtons.forEach(btn => {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
     });
 }
 
@@ -170,8 +192,18 @@ optionBtns.forEach(btn => {
 const langBtns = document.querySelectorAll('.lang-btn');
 langBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+        // Don't allow language change during active quiz
+        if (quizActive) {
+            return;
+        }
         const newLang = btn.dataset.lang;
         languageUtils.setLanguage(newLang);
+
+        // Regenerate questions if mode is selected but quiz hasn't started
+        if (quizMode && !quizActive) {
+            allQuestions = generateQuestions(quizMode);
+            initializeCategoryScores();
+        }
     });
 });
 
@@ -191,12 +223,14 @@ function selectMode(mode) {
 }
 
 function goBackToVersionSelection() {
+    unlockLanguageSelector(); // Unlock language selection when going back
     startScreen.classList.remove('active');
     versionScreen.classList.add('active');
 }
 
 // Functions
 function startQuiz() {
+    lockLanguageSelector(); // Lock language selection during quiz
     startScreen.classList.remove('active');
     quizScreen.classList.add('active');
     showQuestion();
@@ -282,6 +316,7 @@ function getNerdTitle(score) {
 }
 
 function showResults() {
+    unlockLanguageSelector(); // Unlock language selection when quiz ends
     quizScreen.classList.remove('active');
     resultsScreen.classList.add('active');
 
@@ -300,13 +335,13 @@ function showResults() {
     Object.keys(categoryScores).forEach(category => {
         const categoryData = categoryScores[category];
         const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'category-score';
+        categoryDiv.className = 'flex justify-between items-center p-3 md:p-4 mb-3 md:mb-4 bg-black/70 border-2 border-neon-green shadow-[0_0_8px] shadow-neon-green';
 
         const percentage = Math.round((categoryData.score / categoryData.total) * 100);
 
         categoryDiv.innerHTML = `
-            <span class="category-score-name">${category}</span>
-            <span class="category-score-value">${categoryData.score}/${categoryData.total} (${percentage}%)</span>
+            <span class="font-bold text-neon-cyan text-[0.5rem] md:text-xs text-left">${category}</span>
+            <span class="text-neon-green font-bold text-[0.6rem] md:text-sm [text-shadow:_0_0_5px_#00ff00]">${categoryData.score}/${categoryData.total} (${percentage}%)</span>
         `;
 
         categoryScoresEl.appendChild(categoryDiv);
@@ -365,6 +400,7 @@ async function saveResultsToBackend(totalScore, nerdTitle) {
 }
 
 function restartQuiz() {
+    unlockLanguageSelector(); // Unlock language selection
     // Reset state
     currentQuestionIndex = 0;
     answers = [];

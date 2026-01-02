@@ -4,104 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nerdómetro - Login</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="auth-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-pink': '#ff00ff',
+                        'neon-cyan': '#00ffff',
+                        'neon-yellow': '#ffff00',
+                        'neon-green': '#00ff00',
+                        'dark-bg': '#0a0a0a',
+                    },
+                    fontFamily: {
+                        'arcade': ['"Press Start 2P"', 'cursive'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(0deg, transparent 24%, rgba(255, 0, 255, 0.2) 25%, rgba(255, 0, 255, 0.2) 26%, transparent 27%, transparent 74%, rgba(255, 0, 255, 0.2) 75%, rgba(255, 0, 255, 0.2) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(255, 0, 255, 0.2) 25%, rgba(255, 0, 255, 0.2) 26%, transparent 27%, transparent 74%, rgba(255, 0, 255, 0.2) 75%, rgba(255, 0, 255, 0.2) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 999;
+            animation: scanlines 8s linear infinite;
+        }
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+        @keyframes neonFlicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00aa;
+            }
+            20%, 24%, 55% { text-shadow: none; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        @keyframes neonPulse {
+            0%, 100% { text-shadow: 0 0 15px #ff00ff; }
+            50% { text-shadow: 0 0 25px #ff00ff, 0 0 35px #ff00ff; }
+        }
+        h1 {
+            animation: neonFlicker 3s infinite alternate;
+        }
+        .auth-screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .auth-title {
+            animation: neonPulse 2s infinite;
+        }
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s;
+        }
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                animation: none;
+            }
+            .auth-title {
+                animation: none;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="language-selector">
-                <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn active" data-lang="es">ES</button>
-                <button class="lang-btn" data-lang="pt">PT</button>
+<body class="bg-dark-bg text-neon-cyan min-h-screen flex justify-center items-center p-5 overflow-x-hidden">
+    <div class="max-w-3xl w-full relative z-10">
+        <header class="text-center mb-8 relative">
+            <div class="md:absolute top-0 right-0 flex gap-2 z-10 justify-center md:justify-end mb-4 md:mb-0">
+                <button class="lang-btn px-3 py-2 font-arcade text-[0.5rem] md:text-xs bg-dark-bg text-neon-cyan border-2 border-neon-cyan cursor-pointer transition-all hover:bg-neon-cyan hover:text-dark-bg hover:scale-105 shadow-[0_0_5px] shadow-neon-cyan" data-lang="en">EN</button>
+                <button class="lang-btn active px-3 py-2 font-arcade text-[0.5rem] md:text-xs bg-neon-pink text-dark-bg border-2 border-neon-pink cursor-pointer shadow-[0_0_15px] shadow-neon-pink" data-lang="es">ES</button>
+                <button class="lang-btn px-3 py-2 font-arcade text-[0.5rem] md:text-xs bg-dark-bg text-neon-cyan border-2 border-neon-cyan cursor-pointer transition-all hover:bg-neon-cyan hover:text-dark-bg hover:scale-105 shadow-[0_0_5px] shadow-neon-cyan" data-lang="pt">PT</button>
             </div>
-            <h1>NERDÓMETRO</h1>
-            <p class="subtitle">Authentication</p>
+            <h1 class="text-4xl md:text-5xl mb-4 text-neon-pink [text-shadow:_0_0_10px_#ff00ff,_0_0_20px_#ff00ff,_0_0_30px_#ff00ff,_0_0_40px_#ff00aa] leading-relaxed tracking-wide">NERDÓMETRO</h1>
+            <p class="subtitle text-neon-cyan text-xs md:text-sm [text-shadow:_0_0_10px_#00ffff] leading-relaxed">Authentication</p>
         </header>
 
         <!-- Login Screen -->
-        <div id="login-screen" class="auth-screen active">
-            <div class="auth-container">
-                <h2 class="auth-title">Login</h2>
-                <form id="login-form" class="auth-form">
-                    <div class="form-group">
-                        <label for="login-email">Email</label>
-                        <input type="email" id="login-email" required autocomplete="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="login-password">Password</label>
-                        <input type="password" id="login-password" required autocomplete="current-password">
-                    </div>
-                    <div id="login-error" class="error-message"></div>
-                    <button type="submit" class="btn-primary">Login</button>
-                </form>
-                <div class="auth-links">
-                    <a href="#" id="show-register">Don't have an account? Register</a>
-                    <a href="#" id="show-forgot-password">Forgot Password?</a>
+        <div id="login-screen" class="auth-screen active hidden bg-black/90 border-[3px] border-neon-cyan rounded-lg p-10 max-w-lg mx-auto shadow-[0_0_30px] shadow-neon-cyan relative before:content-[''] before:absolute before:top-1 before:left-1 before:right-1 before:bottom-1 before:border-2 before:border-neon-pink before:rounded-lg before:pointer-events-none">
+            <h2 class="auth-title text-3xl md:text-4xl text-neon-pink text-center mb-6 [text-shadow:_0_0_15px_#ff00ff]">Login</h2>
+            <form id="login-form" class="my-8">
+                <div class="mb-6">
+                    <label for="login-email" class="block text-neon-cyan mb-2.5 text-xs md:text-sm [text-shadow:_0_0_5px_#00ffff]">Email</label>
+                    <input type="email" id="login-email" required autocomplete="email" class="w-full p-3.5 bg-black/60 border-2 border-neon-cyan rounded text-neon-cyan font-arcade text-[0.65rem] md:text-xs transition-all focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px] focus:shadow-neon-pink focus:bg-black/80">
                 </div>
-                <div class="auth-divider">
-                    <span>OR</span>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-neon-cyan mb-2.5 text-xs md:text-sm [text-shadow:_0_0_5px_#00ffff]">Password</label>
+                    <input type="password" id="login-password" required autocomplete="current-password" class="w-full p-3.5 bg-black/60 border-2 border-neon-cyan rounded text-neon-cyan font-arcade text-[0.65rem] md:text-xs transition-all focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px] focus:shadow-neon-pink focus:bg-black/80">
                 </div>
-                <a href="index.html" class="btn-secondary">Continue as Guest</a>
+                <div id="login-error" class="error-message hidden bg-red-500/20 border-2 border-red-500 text-red-400 p-3 rounded mb-5 text-[0.55rem] md:text-xs leading-normal [text-shadow:_0_0_5px_#ff0000]"></div>
+                <button type="submit" class="w-full p-5 text-sm md:text-base font-arcade border-4 border-neon-yellow bg-dark-bg text-neon-yellow cursor-pointer transition-all uppercase shadow-[0_0_10px] shadow-neon-yellow hover:bg-neon-yellow hover:text-dark-bg hover:shadow-[0_0_20px,_0_0_30px] hover:shadow-neon-yellow hover:scale-[1.02] active:scale-95">Login</button>
+            </form>
+            <div class="text-center my-6">
+                <a href="#" id="show-register" class="block text-neon-cyan no-underline text-[0.55rem] md:text-xs my-3 transition-all [text-shadow:_0_0_5px_#00ffff] hover:text-neon-pink hover:[text-shadow:_0_0_10px_#ff00ff] hover:scale-105">Don't have an account? Register</a>
+                <a href="#" id="show-forgot-password" class="block text-neon-cyan no-underline text-[0.55rem] md:text-xs my-3 transition-all [text-shadow:_0_0_5px_#00ffff] hover:text-neon-pink hover:[text-shadow:_0_0_10px_#ff00ff] hover:scale-105">Forgot Password?</a>
             </div>
+            <div class="text-center my-8 relative">
+                <span class="text-neon-cyan text-[0.65rem] md:text-sm px-4 bg-black/90 relative z-10 [text-shadow:_0_0_10px_#00ffff]">OR</span>
+                <div class="absolute top-1/2 left-0 w-[42%] h-0.5 bg-gradient-to-r from-transparent via-neon-cyan to-transparent"></div>
+                <div class="absolute top-1/2 right-0 w-[42%] h-0.5 bg-gradient-to-l from-transparent via-neon-cyan to-transparent"></div>
+            </div>
+            <a href="index.html" class="block text-center w-full p-5 text-sm md:text-base font-arcade border-4 border-neon-cyan bg-dark-bg text-neon-cyan cursor-pointer transition-all uppercase shadow-[0_0_10px] shadow-neon-cyan hover:bg-neon-cyan hover:text-dark-bg hover:shadow-[0_0_20px,_0_0_30px] hover:shadow-neon-cyan hover:scale-[1.02] active:scale-95 no-underline">Continue as Guest</a>
         </div>
 
         <!-- Register Screen -->
-        <div id="register-screen" class="auth-screen">
-            <div class="auth-container">
-                <h2 class="auth-title">Create Account</h2>
-                <form id="register-form" class="auth-form">
-                    <div class="form-group">
-                        <label for="register-username">Username</label>
-                        <input type="text" id="register-username" required
-                               pattern="[a-zA-Z0-9_-]{3,30}"
-                               title="3-30 characters, letters, numbers, underscore, or hyphen"
-                               autocomplete="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-email">Email</label>
-                        <input type="email" id="register-email" required autocomplete="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-password">Password</label>
-                        <input type="password" id="register-password" required
-                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
-                               title="At least 8 characters, one uppercase, one lowercase, one number"
-                               autocomplete="new-password">
-                        <div class="password-requirements">
-                            <small>At least 8 characters, one uppercase, one lowercase, one number</small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-confirm-password">Confirm Password</label>
-                        <input type="password" id="register-confirm-password" required autocomplete="new-password">
-                    </div>
-                    <div id="register-error" class="error-message"></div>
-                    <button type="submit" class="btn-primary">Register</button>
-                </form>
-                <div class="auth-links">
-                    <a href="#" id="show-login">Already have an account? Login</a>
+        <div id="register-screen" class="auth-screen hidden bg-black/90 border-[3px] border-neon-cyan rounded-lg p-10 max-w-lg mx-auto shadow-[0_0_30px] shadow-neon-cyan relative before:content-[''] before:absolute before:top-1 before:left-1 before:right-1 before:bottom-1 before:border-2 before:border-neon-pink before:rounded-lg before:pointer-events-none">
+            <h2 class="auth-title text-3xl md:text-4xl text-neon-pink text-center mb-6 [text-shadow:_0_0_15px_#ff00ff]">Create Account</h2>
+            <form id="register-form" class="my-8">
+                <div class="mb-6">
+                    <label for="register-username" class="block text-neon-cyan mb-2.5 text-xs md:text-sm [text-shadow:_0_0_5px_#00ffff]">Username</label>
+                    <input type="text" id="register-username" required pattern="[a-zA-Z0-9_-]{3,30}" title="3-30 characters, letters, numbers, underscore, or hyphen" autocomplete="username" class="w-full p-3.5 bg-black/60 border-2 border-neon-cyan rounded text-neon-cyan font-arcade text-[0.65rem] md:text-xs transition-all focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px] focus:shadow-neon-pink focus:bg-black/80">
                 </div>
+                <div class="mb-6">
+                    <label for="register-email" class="block text-neon-cyan mb-2.5 text-xs md:text-sm [text-shadow:_0_0_5px_#00ffff]">Email</label>
+                    <input type="email" id="register-email" required autocomplete="email" class="w-full p-3.5 bg-black/60 border-2 border-neon-cyan rounded text-neon-cyan font-arcade text-[0.65rem] md:text-xs transition-all focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px] focus:shadow-neon-pink focus:bg-black/80">
+                </div>
+                <div class="mb-6">
+                    <label for="register-password" class="block text-neon-cyan mb-2.5 text-xs md:text-sm [text-shadow:_0_0_5px_#00ffff]">Password</label>
+                    <input type="password" id="register-password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" title="At least 8 characters, one uppercase, one lowercase, one number" autocomplete="new-password" class="w-full p-3.5 bg-black/60 border-2 border-neon-cyan rounded text-neon-cyan font-arcade text-[0.65rem] md:text-xs transition-all focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px] focus:shadow-neon-pink focus:bg-black/80">
+                    <div class="password-requirements mt-2">
+                        <small class="text-neon-yellow text-[0.45rem] md:text-xs leading-normal">At least 8 characters, one uppercase, one lowercase, one number</small>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="register-confirm-password" class="block text-neon-cyan mb-2.5 text-xs md:text-sm [text-shadow:_0_0_5px_#00ffff]">Confirm Password</label>
+                    <input type="password" id="register-confirm-password" required autocomplete="new-password" class="w-full p-3.5 bg-black/60 border-2 border-neon-cyan rounded text-neon-cyan font-arcade text-[0.65rem] md:text-xs transition-all focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px] focus:shadow-neon-pink focus:bg-black/80">
+                </div>
+                <div id="register-error" class="error-message hidden bg-red-500/20 border-2 border-red-500 text-red-400 p-3 rounded mb-5 text-[0.55rem] md:text-xs leading-normal [text-shadow:_0_0_5px_#ff0000]"></div>
+                <button type="submit" class="w-full p-5 text-sm md:text-base font-arcade border-4 border-neon-yellow bg-dark-bg text-neon-yellow cursor-pointer transition-all uppercase shadow-[0_0_10px] shadow-neon-yellow hover:bg-neon-yellow hover:text-dark-bg hover:shadow-[0_0_20px,_0_0_30px] hover:shadow-neon-yellow hover:scale-[1.02] active:scale-95">Register</button>
+            </form>
+            <div class="text-center my-6">
+                <a href="#" id="show-login" class="block text-neon-cyan no-underline text-[0.55rem] md:text-xs my-3 transition-all [text-shadow:_0_0_5px_#00ffff] hover:text-neon-pink hover:[text-shadow:_0_0_10px_#ff00ff] hover:scale-105">Already have an account? Login</a>
             </div>
         </div>
 
         <!-- Forgot Password Screen -->
-        <div id="forgot-password-screen" class="auth-screen">
-            <div class="auth-container">
-                <h2 class="auth-title">Reset Password</h2>
-                <p class="auth-description">Enter your email and we'll send you a reset link</p>
-                <form id="forgot-password-form" class="auth-form">
-                    <div class="form-group">
-                        <label for="forgot-email">Email</label>
-                        <input type="email" id="forgot-email" required autocomplete="email">
-                    </div>
-                    <div id="forgot-error" class="error-message"></div>
-                    <div id="forgot-success" class="success-message"></div>
-                    <button type="submit" class="btn-primary">Send Reset Link</button>
-                </form>
-                <div class="auth-links">
-                    <a href="#" id="back-to-login">Back to Login</a>
+        <div id="forgot-password-screen" class="auth-screen hidden bg-black/90 border-[3px] border-neon-cyan rounded-lg p-10 max-w-lg mx-auto shadow-[0_0_30px] shadow-neon-cyan relative before:content-[''] before:absolute before:top-1 before:left-1 before:right-1 before:bottom-1 before:border-2 before:border-neon-pink before:rounded-lg before:pointer-events-none">
+            <h2 class="auth-title text-3xl md:text-4xl text-neon-pink text-center mb-6 [text-shadow:_0_0_15px_#ff00ff]">Reset Password</h2>
+            <p class="auth-description text-center text-neon-cyan mb-6 text-xs md:text-sm leading-relaxed">Enter your email and we'll send you a reset link</p>
+            <form id="forgot-password-form" class="my-8">
+                <div class="mb-6">
+                    <label for="forgot-email" class="block text-neon-cyan mb-2.5 text-xs md:text-sm [text-shadow:_0_0_5px_#00ffff]">Email</label>
+                    <input type="email" id="forgot-email" required autocomplete="email" class="w-full p-3.5 bg-black/60 border-2 border-neon-cyan rounded text-neon-cyan font-arcade text-[0.65rem] md:text-xs transition-all focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px] focus:shadow-neon-pink focus:bg-black/80">
                 </div>
+                <div id="forgot-error" class="error-message hidden bg-red-500/20 border-2 border-red-500 text-red-400 p-3 rounded mb-5 text-[0.55rem] md:text-xs leading-normal [text-shadow:_0_0_5px_#ff0000]"></div>
+                <div id="forgot-success" class="success-message hidden bg-green-500/20 border-2 border-green-500 text-green-400 p-3 rounded mb-5 text-[0.55rem] md:text-xs leading-normal [text-shadow:_0_0_5px_#00ff00]"></div>
+                <button type="submit" class="w-full p-5 text-sm md:text-base font-arcade border-4 border-neon-yellow bg-dark-bg text-neon-yellow cursor-pointer transition-all uppercase shadow-[0_0_10px] shadow-neon-yellow hover:bg-neon-yellow hover:text-dark-bg hover:shadow-[0_0_20px,_0_0_30px] hover:shadow-neon-yellow hover:scale-[1.02] active:scale-95">Send Reset Link</button>
+            </form>
+            <div class="text-center my-6">
+                <a href="#" id="back-to-login" class="block text-neon-cyan no-underline text-[0.55rem] md:text-xs my-3 transition-all [text-shadow:_0_0_5px_#00ffff] hover:text-neon-pink hover:[text-shadow:_0_0_10px_#ff00ff] hover:scale-105">Back to Login</a>
             </div>
         </div>
     </div>

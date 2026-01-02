@@ -91,7 +91,7 @@ loginForm.addEventListener('submit', async (e) => {
         }
     } catch (error) {
         console.error('Login error:', error);
-        errorEl.textContent = 'Login failed. Please try again.';
+        errorEl.textContent = languageUtils.t('loginError');
         errorEl.classList.add('show');
         submitBtn.disabled = false;
     }
@@ -112,7 +112,7 @@ registerForm.addEventListener('submit', async (e) => {
 
     // Validate passwords match
     if (password !== confirmPassword) {
-        errorEl.textContent = 'Passwords do not match';
+        errorEl.textContent = languageUtils.t('passwordsNoMatch');
         errorEl.classList.add('show');
         return;
     }
@@ -132,18 +132,18 @@ registerForm.addEventListener('submit', async (e) => {
         const data = await response.json();
 
         if (data.success) {
-            alert('Registration successful! Please check your email to verify your account.');
+            alert(languageUtils.t('registerSuccess'));
             registerScreen.classList.remove('active');
             loginScreen.classList.add('active');
             registerForm.reset();
         } else {
-            errorEl.textContent = data.message || 'Registration failed. Please try again.';
+            errorEl.textContent = data.message || languageUtils.t('registerError');
             errorEl.classList.add('show');
             submitBtn.disabled = false;
         }
     } catch (error) {
         console.error('Registration error:', error);
-        errorEl.textContent = 'Registration failed. Please try again.';
+        errorEl.textContent = languageUtils.t('registerError');
         errorEl.classList.add('show');
         submitBtn.disabled = false;
     }
@@ -183,7 +183,7 @@ forgotPasswordForm.addEventListener('submit', async (e) => {
         }
     } catch (error) {
         console.error('Forgot password error:', error);
-        errorEl.textContent = 'Request failed. Please try again.';
+        errorEl.textContent = languageUtils.t('forgotPasswordError');
         errorEl.classList.add('show');
     } finally {
         submitBtn.disabled = false;
@@ -199,3 +199,12 @@ if (localStorage.getItem('token')) {
 if (typeof languageUtils !== 'undefined') {
     languageUtils.init();
 }
+
+// Language switching
+const langBtns = document.querySelectorAll('.lang-btn');
+langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const newLang = btn.dataset.lang;
+        languageUtils.setLanguage(newLang);
+    });
+});

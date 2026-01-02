@@ -39,6 +39,34 @@ const translations = {
         shareCopied: "Result copied to clipboard!",
         shareError: "Could not share. Try copying manually:\n\n",
 
+        // Authentication
+        authSubtitle: "Authentication",
+        loginTitle: "Login",
+        registerTitle: "Create Account",
+        forgotPasswordTitle: "Reset Password",
+        forgotPasswordDesc: "Enter your email and we'll send you a reset link",
+        emailLabel: "Email",
+        passwordLabel: "Password",
+        usernameLabel: "Username",
+        confirmPasswordLabel: "Confirm Password",
+        loginButton: "Login",
+        registerButton: "Register",
+        sendResetButton: "Send Reset Link",
+        showRegisterLink: "Don't have an account? Register",
+        showLoginLink: "Already have an account? Login",
+        showForgotPasswordLink: "Forgot Password?",
+        backToLoginLink: "Back to Login",
+        continueAsGuestButton: "Continue as Guest",
+        orDivider: "OR",
+        passwordRequirements: "At least 8 characters, one uppercase, one lowercase, one number",
+        passwordsNoMatch: "Passwords do not match",
+        loginError: "Login failed. Please try again.",
+        registerError: "Registration failed. Please try again.",
+        registerSuccess: "Registration successful! Please check your email to verify your account.",
+        forgotPasswordError: "Request failed. Please try again.",
+        logoutButton: "Logout",
+        loginRegisterButton: "Login / Register",
+
         // Categories
         categories: [
             "Anime and Manga",
@@ -271,6 +299,34 @@ const translations = {
         shareCopied: "¡Resultado copiado al portapapeles!",
         shareError: "No se pudo compartir. Intenta copiar manualmente:\n\n",
 
+        // Authentication
+        authSubtitle: "Autenticación",
+        loginTitle: "Iniciar Sesión",
+        registerTitle: "Crear Cuenta",
+        forgotPasswordTitle: "Restablecer Contraseña",
+        forgotPasswordDesc: "Ingresa tu email y te enviaremos un enlace de restablecimiento",
+        emailLabel: "Correo Electrónico",
+        passwordLabel: "Contraseña",
+        usernameLabel: "Nombre de Usuario",
+        confirmPasswordLabel: "Confirmar Contraseña",
+        loginButton: "Iniciar Sesión",
+        registerButton: "Registrarse",
+        sendResetButton: "Enviar Enlace",
+        showRegisterLink: "¿No tienes cuenta? Regístrate",
+        showLoginLink: "¿Ya tienes cuenta? Inicia sesión",
+        showForgotPasswordLink: "¿Olvidaste tu contraseña?",
+        backToLoginLink: "Volver al inicio de sesión",
+        continueAsGuestButton: "Continuar como Invitado",
+        orDivider: "O",
+        passwordRequirements: "Mínimo 8 caracteres, una mayúscula, una minúscula, un número",
+        passwordsNoMatch: "Las contraseñas no coinciden",
+        loginError: "Error al iniciar sesión. Inténtalo de nuevo.",
+        registerError: "Error al registrarse. Inténtalo de nuevo.",
+        registerSuccess: "¡Registro exitoso! Por favor revisa tu email para verificar tu cuenta.",
+        forgotPasswordError: "Error en la solicitud. Inténtalo de nuevo.",
+        logoutButton: "Cerrar Sesión",
+        loginRegisterButton: "Iniciar Sesión / Registrarse",
+
         // Categories
         categories: [
             "Anime y Manga",
@@ -502,6 +558,34 @@ const translations = {
         shareText: "Eu fiz o Nerdômetro!\n\nMeu resultado: {title}\nPontuação: {score}/{total} ({percentage}%)\n\nQuão nerd você é?",
         shareCopied: "Resultado copiado para a área de transferência!",
         shareError: "Não foi possível compartilhar. Tente copiar manualmente:\n\n",
+
+        // Authentication
+        authSubtitle: "Autenticação",
+        loginTitle: "Entrar",
+        registerTitle: "Criar Conta",
+        forgotPasswordTitle: "Redefinir Senha",
+        forgotPasswordDesc: "Digite seu email e enviaremos um link de redefinição",
+        emailLabel: "E-mail",
+        passwordLabel: "Senha",
+        usernameLabel: "Nome de Usuário",
+        confirmPasswordLabel: "Confirmar Senha",
+        loginButton: "Entrar",
+        registerButton: "Registrar",
+        sendResetButton: "Enviar Link",
+        showRegisterLink: "Não tem uma conta? Registre-se",
+        showLoginLink: "Já tem uma conta? Entre",
+        showForgotPasswordLink: "Esqueceu a senha?",
+        backToLoginLink: "Voltar para o login",
+        continueAsGuestButton: "Continuar como Convidado",
+        orDivider: "OU",
+        passwordRequirements: "Mínimo 8 caracteres, uma maiúscula, uma minúscula, um número",
+        passwordsNoMatch: "As senhas não coincidem",
+        loginError: "Falha no login. Tente novamente.",
+        registerError: "Falha no registro. Tente novamente.",
+        registerSuccess: "Registro bem-sucedido! Por favor, verifique seu email para verificar sua conta.",
+        forgotPasswordError: "Solicitação falhou. Tente novamente.",
+        logoutButton: "Sair",
+        loginRegisterButton: "Entrar / Registrar",
 
         // Categories
         categories: [
@@ -799,5 +883,81 @@ const languageUtils = {
         langButtons.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === this.currentLanguage);
         });
+
+        // Update auth page elements if they exist
+        const authSubtitleEl = document.querySelector('header .subtitle');
+        if (authSubtitleEl && window.location.pathname.includes('auth')) {
+            authSubtitleEl.textContent = this.t('authSubtitle');
+        }
+
+        const loginTitleEl = document.querySelector('#login-screen .auth-title');
+        if (loginTitleEl) loginTitleEl.textContent = this.t('loginTitle');
+
+        const registerTitleEl = document.querySelector('#register-screen .auth-title');
+        if (registerTitleEl) registerTitleEl.textContent = this.t('registerTitle');
+
+        const forgotPasswordTitleEl = document.querySelector('#forgot-password-screen .auth-title');
+        if (forgotPasswordTitleEl) forgotPasswordTitleEl.textContent = this.t('forgotPasswordTitle');
+
+        const forgotPasswordDescEl = document.querySelector('#forgot-password-screen .auth-description');
+        if (forgotPasswordDescEl) forgotPasswordDescEl.textContent = this.t('forgotPasswordDesc');
+
+        // Update labels
+        const labels = {
+            'login-email': 'emailLabel',
+            'login-password': 'passwordLabel',
+            'register-username': 'usernameLabel',
+            'register-email': 'emailLabel',
+            'register-password': 'passwordLabel',
+            'register-confirm-password': 'confirmPasswordLabel',
+            'forgot-email': 'emailLabel'
+        };
+
+        Object.keys(labels).forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                const label = document.querySelector(`label[for="${id}"]`);
+                if (label) label.textContent = this.t(labels[id]);
+            }
+        });
+
+        // Update buttons
+        const loginBtnEl = document.querySelector('#login-form button[type="submit"]');
+        if (loginBtnEl) loginBtnEl.textContent = this.t('loginButton');
+
+        const registerBtnEl = document.querySelector('#register-form button[type="submit"]');
+        if (registerBtnEl) registerBtnEl.textContent = this.t('registerButton');
+
+        const forgotBtnEl = document.querySelector('#forgot-password-form button[type="submit"]');
+        if (forgotBtnEl) forgotBtnEl.textContent = this.t('sendResetButton');
+
+        // Update links
+        const showRegisterEl = document.getElementById('show-register');
+        if (showRegisterEl) showRegisterEl.textContent = this.t('showRegisterLink');
+
+        const showLoginEl = document.getElementById('show-login');
+        if (showLoginEl) showLoginEl.textContent = this.t('showLoginLink');
+
+        const showForgotPasswordEl = document.getElementById('show-forgot-password');
+        if (showForgotPasswordEl) showForgotPasswordEl.textContent = this.t('showForgotPasswordLink');
+
+        const backToLoginEl = document.getElementById('back-to-login');
+        if (backToLoginEl) backToLoginEl.textContent = this.t('backToLoginLink');
+
+        const continueAsGuestEl = document.querySelector('.auth-container .btn-secondary');
+        if (continueAsGuestEl) continueAsGuestEl.textContent = this.t('continueAsGuestButton');
+
+        const orDividerEl = document.querySelector('.auth-divider span');
+        if (orDividerEl) orDividerEl.textContent = this.t('orDivider');
+
+        const passwordRequirementsEl = document.querySelector('.password-requirements small');
+        if (passwordRequirementsEl) passwordRequirementsEl.textContent = this.t('passwordRequirements');
+
+        // Update user profile button text
+        const logoutBtnEl = document.getElementById('logout-btn');
+        if (logoutBtnEl) logoutBtnEl.textContent = this.t('logoutButton');
+
+        const guestProfileLinkEl = document.querySelector('.guest-profile a');
+        if (guestProfileLinkEl) guestProfileLinkEl.textContent = this.t('loginRegisterButton');
     }
 };

@@ -24,7 +24,13 @@
       "Bash(npm install:*)",
       "Bash(start VERCEL_DEPLOY.md)",
       "Bash(start https://vercel.com/new)",
-      "Bash(start https://nerdometer.vercel.app/)"
+      "Bash(start https://nerdometer.vercel.app/)",
+      "Bash(ls:*)",
+      "Bash(start https://vercel.com/dashboard)",
+      "Bash(del translations.js)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "mcp__ide__getDiagnostics"
     ]
   }
 }
