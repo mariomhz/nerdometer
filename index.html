@@ -4,92 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nerdómetro - ¿Qué tan nerd eres?</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-pink': '#ff00ff',
+                        'neon-cyan': '#00ffff',
+                        'neon-yellow': '#ffff00',
+                        'neon-green': '#00ff00',
+                        'neon-orange': '#ff6600',
+                        'dark-bg': '#0a0a0a',
+                    },
+                    fontFamily: {
+                        'arcade': ['"Press Start 2P"', 'cursive'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(0deg, transparent 24%, rgba(255, 0, 255, 0.2) 25%, rgba(255, 0, 255, 0.2) 26%, transparent 27%, transparent 74%, rgba(255, 0, 255, 0.2) 75%, rgba(255, 0, 255, 0.2) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(255, 0, 255, 0.2) 25%, rgba(255, 0, 255, 0.2) 26%, transparent 27%, transparent 74%, rgba(255, 0, 255, 0.2) 75%, rgba(255, 0, 255, 0.2) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 999;
+            animation: scanlines 8s linear infinite;
+        }
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+        @keyframes neonFlicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00aa;
+            }
+            20%, 24%, 55% { text-shadow: none; }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes crtOn {
+            0% { transform: scale(1, 0.01); opacity: 0; }
+            50% { transform: scale(1.05, 0.8); opacity: 0.5; }
+            100% { transform: scale(1, 1); opacity: 1; }
+        }
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in, crtOn 0.3s ease-out;
+        }
+        h1 {
+            animation: neonFlicker 3s infinite alternate;
+        }
+        .question-container {
+            animation: slideIn 0.3s ease-out;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                animation: none;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="language-selector">
-                <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn active" data-lang="es">ES</button>
-                <button class="lang-btn" data-lang="pt">PT</button>
+<body class="bg-dark-bg text-neon-cyan min-h-screen flex justify-center items-center p-5 overflow-x-hidden">
+    <div class="max-w-3xl w-full relative z-10">
+        <header class="text-center mb-8 relative">
+            <div class="md:absolute top-0 right-0 flex gap-2 z-10 justify-center md:justify-end mb-4 md:mb-0">
+                <button class="lang-btn px-3 py-2 font-arcade text-[0.5rem] md:text-xs bg-dark-bg text-neon-cyan border-2 border-neon-cyan cursor-pointer transition-all hover:bg-neon-cyan hover:text-dark-bg hover:scale-105 shadow-[0_0_5px] shadow-neon-cyan" data-lang="en">EN</button>
+                <button class="lang-btn active px-3 py-2 font-arcade text-[0.5rem] md:text-xs bg-neon-pink text-dark-bg border-2 border-neon-pink cursor-pointer shadow-[0_0_15px] shadow-neon-pink" data-lang="es">ES</button>
+                <button class="lang-btn px-3 py-2 font-arcade text-[0.5rem] md:text-xs bg-dark-bg text-neon-cyan border-2 border-neon-cyan cursor-pointer transition-all hover:bg-neon-cyan hover:text-dark-bg hover:scale-105 shadow-[0_0_5px] shadow-neon-cyan" data-lang="pt">PT</button>
             </div>
 
-            <!-- User Profile Section -->
-            <div id="user-profile" class="user-profile" style="display: none;">
-                <span id="username-display" class="username"></span>
-                <button id="logout-btn" class="btn-small">Logout</button>
+            <div id="user-profile" class="md:absolute top-0 left-0 hidden md:flex items-center gap-3 z-10 justify-center md:justify-start mb-4 md:mb-0">
+                <span id="username-display" class="text-neon-green text-[0.5rem] md:text-xs [text-shadow:_0_0_5px_#00ff00]"></span>
+                <button id="logout-btn" class="px-3 py-2 font-arcade text-[0.4rem] md:text-xs bg-dark-bg text-neon-pink border-2 border-neon-pink cursor-pointer transition-all hover:bg-neon-pink hover:text-dark-bg hover:scale-105 shadow-[0_0_5px] shadow-neon-pink">Logout</button>
             </div>
-            <div id="guest-profile" class="guest-profile">
-                <a href="auth.html" class="btn-small">Login / Register</a>
+            <div id="guest-profile" class="md:absolute top-0 left-0 flex items-center justify-center md:justify-start mb-4 md:mb-0 z-10">
+                <a href="auth.html" class="inline-block px-3 py-2 font-arcade text-[0.4rem] md:text-xs bg-dark-bg text-neon-pink border-2 border-neon-pink cursor-pointer transition-all hover:bg-neon-pink hover:text-dark-bg hover:scale-105 shadow-[0_0_5px] shadow-neon-pink no-underline">Login / Register</a>
             </div>
 
-            <h1>NERDÓMETRO</h1>
-            <p class="subtitle">Descubre qué tan nerd eres realmente</p>
+            <h1 class="text-4xl md:text-5xl mb-4 text-neon-pink [text-shadow:_0_0_10px_#ff00ff,_0_0_20px_#ff00ff,_0_0_30px_#ff00ff,_0_0_40px_#ff00aa] leading-relaxed tracking-wide">NERDÓMETRO</h1>
+            <p class="subtitle text-neon-cyan text-xs md:text-sm [text-shadow:_0_0_10px_#00ffff] leading-relaxed">Descubre qué tan nerd eres realmente</p>
         </header>
 
-        <div id="version-screen" class="screen active">
-            <div class="intro">
-                <h2 class="version-title">Elige tu Modo</h2>
-                <p>¿Cuánto tiempo tienes?</p>
+        <div id="version-screen" class="screen active hidden bg-black/90 border-4 border-neon-pink shadow-[0_0_20px] shadow-neon-pink p-8 relative before:content-[''] before:absolute before:top-2.5 before:left-2.5 before:right-2.5 before:bottom-2.5 before:border-2 before:border-neon-cyan before:shadow-[0_0_10px] before:shadow-neon-cyan before:pointer-events-none">
+            <div class="text-center mb-8">
+                <h2 class="version-title text-2xl md:text-3xl text-neon-pink [text-shadow:_0_0_20px_#ff00ff] mb-4">Elige tu Modo</h2>
+                <p class="text-neon-cyan text-xs md:text-sm leading-7">¿Cuánto tiempo tienes?</p>
             </div>
-            <div class="version-options">
-                <button id="quick-btn" class="version-btn btn-quick">
-                    <span class="version-name">MODO RÁPIDO</span>
-                    <span class="version-desc">10 preguntas</span>
-                    <span class="version-time">2 minutos</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <button id="quick-btn" class="flex flex-col p-8 md:p-6 font-arcade border-4 border-neon-yellow bg-dark-bg cursor-pointer transition-all gap-4 text-center shadow-[0_0_15px] shadow-neon-yellow hover:bg-neon-yellow hover:shadow-[0_0_30px] hover:shadow-neon-yellow hover:scale-105 group">
+                    <span class="version-name text-base md:text-lg text-neon-yellow [text-shadow:_0_0_10px_#ffff00] group-hover:text-dark-bg">MODO RÁPIDO</span>
+                    <span class="version-desc text-xs md:text-sm text-neon-cyan group-hover:text-dark-bg">10 preguntas</span>
+                    <span class="version-time text-[0.5rem] md:text-xs text-neon-green group-hover:text-dark-bg">2 minutos</span>
                 </button>
-                <button id="detailed-btn" class="version-btn btn-detailed">
-                    <span class="version-name">MODO COMPLETO</span>
-                    <span class="version-desc">100 preguntas</span>
-                    <span class="version-time">10 minutos</span>
+                <button id="detailed-btn" class="flex flex-col p-8 md:p-6 font-arcade border-4 border-neon-pink bg-dark-bg cursor-pointer transition-all gap-4 text-center shadow-[0_0_15px] shadow-neon-pink hover:bg-neon-pink hover:shadow-[0_0_30px] hover:shadow-neon-pink hover:scale-105 group">
+                    <span class="version-name text-base md:text-lg text-neon-pink [text-shadow:_0_0_10px_#ff00ff] group-hover:text-dark-bg">MODO COMPLETO</span>
+                    <span class="version-desc text-xs md:text-sm text-neon-cyan group-hover:text-dark-bg">100 preguntas</span>
+                    <span class="version-time text-[0.5rem] md:text-xs text-neon-green group-hover:text-dark-bg">10 minutos</span>
                 </button>
             </div>
         </div>
 
-        <div id="start-screen" class="screen">
-            <div class="intro">
-                <p>Responde honestamente a las siguientes preguntas sobre tus intereses y hábitos.</p>
-                <p>Cada categoría explorará diferentes aspectos de la cultura nerd.</p>
-                <p><strong id="total-info">Total: 100 preguntas</strong></p>
+        <div id="start-screen" class="screen hidden bg-black/90 border-4 border-neon-pink shadow-[0_0_20px] shadow-neon-pink p-8 relative before:content-[''] before:absolute before:top-2.5 before:left-2.5 before:right-2.5 before:bottom-2.5 before:border-2 before:border-neon-cyan before:shadow-[0_0_10px] before:shadow-neon-cyan before:pointer-events-none">
+            <div class="text-center mb-8">
+                <p class="mb-6 text-neon-cyan leading-7 text-xs md:text-sm">Responde honestamente a las siguientes preguntas sobre tus intereses y hábitos.</p>
+                <p class="mb-6 text-neon-cyan leading-7 text-xs md:text-sm">Cada categoría explorará diferentes aspectos de la cultura nerd.</p>
+                <p class="mb-6 text-neon-cyan leading-7 text-xs md:text-sm"><strong id="total-info">Total: 100 preguntas</strong></p>
             </div>
-            <button id="start-btn" class="btn-primary">Comenzar Quiz</button>
-            <button id="back-btn" class="btn-secondary">Cambiar Modo</button>
+            <button id="start-btn" class="w-full p-5 text-sm md:text-base font-arcade border-4 border-neon-yellow bg-dark-bg text-neon-yellow cursor-pointer transition-all mt-4 uppercase shadow-[0_0_10px] shadow-neon-yellow hover:bg-neon-yellow hover:text-dark-bg hover:shadow-[0_0_20px,_0_0_30px] hover:shadow-neon-yellow hover:scale-[1.02] active:scale-95">Comenzar Quiz</button>
+            <button id="back-btn" class="w-full p-5 text-sm md:text-base font-arcade border-4 border-neon-cyan bg-dark-bg text-neon-cyan cursor-pointer transition-all mt-4 uppercase shadow-[0_0_10px] shadow-neon-cyan hover:bg-neon-cyan hover:text-dark-bg hover:shadow-[0_0_20px,_0_0_30px] hover:shadow-neon-cyan hover:scale-[1.02] active:scale-95">Cambiar Modo</button>
         </div>
 
-        <div id="quiz-screen" class="screen">
-            <div class="progress-bar">
-                <div id="progress-fill" class="progress-fill"></div>
+        <div id="quiz-screen" class="screen hidden bg-black/90 border-4 border-neon-pink shadow-[0_0_20px] shadow-neon-pink p-8 relative before:content-[''] before:absolute before:top-2.5 before:left-2.5 before:right-2.5 before:bottom-2.5 before:border-2 before:border-neon-cyan before:shadow-[0_0_10px] before:shadow-neon-cyan before:pointer-events-none">
+            <div class="w-full h-5 bg-black/80 border-[3px] border-neon-green shadow-[0_0_10px] shadow-neon-green overflow-hidden mb-4">
+                <div id="progress-fill" class="h-full bg-neon-green shadow-[0_0_20px] shadow-neon-green w-0 transition-[width] duration-300"></div>
             </div>
-            <div class="progress-text">
+            <div class="text-center text-neon-green mb-8 text-xs md:text-sm [text-shadow:_0_0_5px_#00ff00]">
                 <span id="current-question">1</span> / <span id="total-questions">100</span>
             </div>
 
-            <div id="category-name" class="category-name"></div>
+            <div id="category-name" class="text-center text-base md:text-lg font-bold text-neon-orange mb-8 p-4 border-[3px] border-neon-orange shadow-[0_0_15px] shadow-neon-orange [text-shadow:_0_0_10px_#ff6600]"></div>
 
             <div id="question-container" class="question-container">
-                <p id="question-text" class="question-text"></p>
-                <div class="options">
-                    <button class="option-btn" data-answer="yes">Sí</button>
-                    <button class="option-btn" data-answer="no">No</button>
+                <p id="question-text" class="text-sm md:text-base mb-8 text-center leading-7 text-neon-cyan [text-shadow:_0_0_5px_#00ffff]"></p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <button class="option-btn p-8 md:p-6 text-lg md:text-xl font-arcade border-4 border-neon-green bg-dark-bg text-neon-green cursor-pointer transition-all uppercase shadow-[0_0_15px] shadow-neon-green hover:bg-neon-green hover:text-dark-bg hover:shadow-[0_0_25px,_0_0_35px] hover:shadow-neon-green hover:scale-105 active:scale-95" data-answer="yes">Sí</button>
+                    <button class="option-btn p-8 md:p-6 text-lg md:text-xl font-arcade border-4 border-neon-pink bg-dark-bg text-neon-pink cursor-pointer transition-all uppercase shadow-[0_0_15px] shadow-neon-pink hover:bg-neon-pink hover:text-dark-bg hover:shadow-[0_0_25px,_0_0_35px] hover:shadow-neon-pink hover:scale-105 active:scale-95" data-answer="no">No</button>
                 </div>
             </div>
         </div>
 
-        <div id="results-screen" class="screen">
-            <div class="results-container">
-                <h2>¡Resultados!</h2>
-                <div id="score-display" class="score-display"></div>
-                <div id="title-display" class="title-display"></div>
-                <div id="title-description" class="title-description"></div>
+        <div id="results-screen" class="screen hidden bg-black/90 border-4 border-neon-pink shadow-[0_0_20px] shadow-neon-pink p-8 relative before:content-[''] before:absolute before:top-2.5 before:left-2.5 before:right-2.5 before:bottom-2.5 before:border-2 before:border-neon-cyan before:shadow-[0_0_10px] before:shadow-neon-cyan before:pointer-events-none">
+            <div class="text-center">
+                <h2 class="text-2xl md:text-3xl mb-8 text-neon-yellow [text-shadow:_0_0_20px_#ffff00]">¡Resultados!</h2>
+                <div id="score-display" class="text-5xl md:text-6xl font-bold mb-8 text-neon-cyan [text-shadow:_0_0_10px_#00ffff,_0_0_20px_#00ffff,_0_0_30px_#00ffff]"></div>
+                <div id="title-display" class="text-xl md:text-2xl font-bold mb-8 text-neon-pink uppercase tracking-widest [text-shadow:_0_0_10px_#ff00ff,_0_0_20px_#ff00ff,_0_0_30px_#ff00ff] leading-relaxed"></div>
+                <div id="title-description" class="text-[0.6rem] md:text-xs text-neon-cyan mb-8 leading-7"></div>
 
-                <div id="category-breakdown" class="category-breakdown">
-                    <h3>Desglose por Categoría</h3>
+                <div id="category-breakdown" class="my-8 p-6 bg-black/50 border-[3px] border-neon-yellow shadow-[0_0_15px] shadow-neon-yellow">
+                    <h3 class="mb-6 text-neon-yellow text-base md:text-lg [text-shadow:_0_0_10px_#ffff00]">Desglose por Categoría</h3>
                     <div id="category-scores"></div>
                 </div>
 
-                <button id="restart-btn" class="btn-primary">Hacer el Quiz de Nuevo</button>
-                <button id="share-btn" class="btn-secondary">Compartir Resultado</button>
+                <button id="restart-btn" class="w-full p-5 text-sm md:text-base font-arcade border-4 border-neon-yellow bg-dark-bg text-neon-yellow cursor-pointer transition-all mt-4 uppercase shadow-[0_0_10px] shadow-neon-yellow hover:bg-neon-yellow hover:text-dark-bg hover:shadow-[0_0_20px,_0_0_30px] hover:shadow-neon-yellow hover:scale-[1.02] active:scale-95">Hacer el Quiz de Nuevo</button>
+                <button id="share-btn" class="w-full p-5 text-sm md:text-base font-arcade border-4 border-neon-cyan bg-dark-bg text-neon-cyan cursor-pointer transition-all mt-4 uppercase shadow-[0_0_10px] shadow-neon-cyan hover:bg-neon-cyan hover:text-dark-bg hover:shadow-[0_0_20px,_0_0_30px] hover:shadow-neon-cyan hover:scale-[1.02] active:scale-95">Compartir Resultado</button>
             </div>
         </div>
     </div>
